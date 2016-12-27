@@ -19,7 +19,7 @@ Meteor.methods({
         token.addGrant(grant);
 
         response = {
-          identity: identity,
+          identity: token.identity,
           token: token.toJwt()
         }
         return response;
