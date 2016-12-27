@@ -1,0 +1,11 @@
+{
+  "public": {},
+  "private": {
+    "twilio":{
+      "configurationProfileSid":"do not share this",
+      "accountSid":"shhh",
+      "apiKey":"get your own from twilio",
+      "apiKeySecret":"go now this will not work without it"
+    }
+  }
+}

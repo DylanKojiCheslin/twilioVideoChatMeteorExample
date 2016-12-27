@@ -1,0 +1,10 @@
+<template name="videoChat">
+  stuff
+  {{#if twilioVideoNotSupportedByBrowser}}
+  your browser doesn't support Web RTC or ORTC.
+  get a recent version of Chrome, Firefox, or Microsoft Edge
+  {{/if}}
+  <div id="media-view"></div>
+  <button id="js-request-video-chat-access">Start</button>
+
+</template>
