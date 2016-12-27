@@ -10,3 +10,8 @@ put your twilio account data into settings.json
 run with
 
 meteor --settings settings.json
+
+if your confused about the settings file, refer to the config values in
+https://github.com/TwilioDevEd/video-quickstart-node
+
+client side call must pass rando value
