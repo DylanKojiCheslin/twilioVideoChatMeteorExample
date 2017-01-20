@@ -13,32 +13,34 @@ Template.videoChat.helpers({
 });
 
 Template.videoChat.events({
-  'submit #js-request-video-chat-access': function (event) {
+  'submit #js-request-video-chat': function (event) {
     event.preventDefault();
     const target = event.target;
     const roomName = target.text.value;
     let userIdendifer = Random.id();
-    let returnAccessToken;
+    let initAccessToken;
     let accessToken;
-    returnAccessToken = Meteor.call(
+    let client;
+    let room;
+    //client created and video accessed
+    initAccessToken = Meteor.call(
       "requestVideoChatAccess", roomName, userIdendifer,
       function requestVideoChatAccessCallback(error, result) {
         if (error) {
           console.log(error, error.reson);
         }
-        else {
+        if (result) {
           accessToken = result;
-          console.log('token Obj');
-          console.log(accessToken);
-
-          const client = new Video.Client(accessToken.token);
-          console.log('client obj');
-          console.log(client);
-          const room = client.connect({
+          client = new Video.Client(accessToken.token);
+          room = client.connect({
             to: roomName
           })
-          // .then(room => {participant.media.attach('#media-view')})
+          .then(
+            room => {
+              room.localParticipant.media.attach('#local-media');
+            }
+          )
         }
-      });
-    }
-  });
+    })
+  }
+});
