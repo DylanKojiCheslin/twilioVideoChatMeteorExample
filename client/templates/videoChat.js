@@ -17,7 +17,7 @@ Template.videoChat.events({
     event.preventDefault();
     const target = event.target;
     const roomName = target.text.value;
-    let userIdendifer = Random.id();
+    const userIdendifer = Random.id();
     let initAccessToken;
     let accessToken;
     let client;
@@ -38,6 +38,21 @@ Template.videoChat.events({
           .then(
             room => {
               room.localParticipant.media.attach('#local-media');
+
+              room.participants.forEach(function(participant) {
+                participant.media.attach('#remote-media');
+              });
+
+              room.on('participantConnected', function (participant) {
+                participant.media.attach('#remote-media');
+              });
+
+              room.on('disconnected', function () {
+                room.localParticipant.media.detach();
+                room.participants.forEach(function(participant) {
+                  participant.media.detach();
+                });
+              });
             }
           )
         }
