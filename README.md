@@ -8,16 +8,14 @@ clone this repo
 run:
 
 meteor npm install --save babel-runtime
+meteor npm install --save meteor-node-stubs
+
+may need to install babel-runtime/meteor-node-stubs depending on your version
+in the meteor console will say if it needs it
 
 meteor npm install --save twilio
 
 meteor npm install --save twilio-video
-
-you may need to run this depending on what version of meteor you have
-it will say it needs it in the console
-
-meteor npm install --save meteor-node-stubs
-
 
 copy example-settings.json to settings.json
 
@@ -29,3 +27,11 @@ meteor --settings settings.json
 
 if your confused about the settings file, refer to the config values in
 https://github.com/TwilioDevEd/video-quickstart-node
+
+go to localhost:3000
+enter a room number and hit enter
+allow video camera access in you browser if necessary
+make a new incognito window go to localhost:3000 on it
+mute your volume or you will hear a lot of feedback
+enter the same room number
+video chat with your self then click the "end call" button when your done
