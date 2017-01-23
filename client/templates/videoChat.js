@@ -1,8 +1,9 @@
 import Video from 'twilio-video';
 
 Template.videoChat.onDestroyed(function () {
-  if (room) {
-    room.disconnect();
+  const temp = this;
+  if (temp.room) {
+    temp.room.disconnect();
   }
 });
 
@@ -18,11 +19,11 @@ Template.videoChat.events({
     const target = event.target;
     const roomName = target.text.value;
     const userIdendifer = Random.id();
+    const temp = Template.instance();
     let initAccessToken;
     let accessToken;
-    let client;
     let room;
-    //client created and video accessed
+
     initAccessToken = Meteor.call(
       "requestVideoChatAccess", roomName, userIdendifer,
       function requestVideoChatAccessCallback(error, result) {
@@ -31,8 +32,8 @@ Template.videoChat.events({
         }
         if (result) {
           accessToken = result;
-          client = new Video.Client(accessToken.token);
-          room = client.connect({
+          temp.client = new Video.Client(accessToken.token);
+          room = temp.client.connect({
             to: roomName
           })
           .then(
@@ -53,9 +54,17 @@ Template.videoChat.events({
                   participant.media.detach();
                 });
               });
+
+              temp.room = room;
             }
           )
         }
     })
+  },
+  "click #js-end-video-chat" : function (event, Template){
+    event.preventDefault();
+    if (Template.room) {
+      Template.room.disconnect();
+    }
   }
 });
