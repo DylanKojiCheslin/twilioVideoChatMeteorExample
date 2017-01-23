@@ -3,7 +3,7 @@ const ConversationsGrant = AccessToken.ConversationsGrant;
 Meteor.methods({
     'requestVideoChatAccess' : function(roomName, clientIdentity){
         check(roomName, String);
-        check(roomName, String);
+        check(clientIdentity, String);
         let token, response;
         let grant = new ConversationsGrant();
         token = new AccessToken(
