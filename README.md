@@ -7,7 +7,6 @@ clone this repo
 
 install node packages:
 
-required:  
 ```
 meteor npm install --save twilio
 ```  
