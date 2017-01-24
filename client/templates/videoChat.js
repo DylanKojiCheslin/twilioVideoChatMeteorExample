@@ -14,12 +14,11 @@ Template.videoChat.helpers({
 });
 
 Template.videoChat.events({
-  'submit #js-request-video-chat': function (event) {
+  'submit #js-request-video-chat': function (event, template) {
     event.preventDefault();
     const target = event.target;
     const roomName = target.text.value;
     const userIdendifer = Random.id();
-    const temp = Template.instance();
     let initAccessToken;
     let accessToken;
     let room;
@@ -32,8 +31,8 @@ Template.videoChat.events({
         }
         if (result) {
           accessToken = result;
-          temp.client = new Video.Client(accessToken.token);
-          room = temp.client.connect({
+          template.client = new Video.Client(accessToken.token);
+          room = template.client.connect({
             to: roomName
           })
           .then(
@@ -55,7 +54,7 @@ Template.videoChat.events({
                 });
               });
 
-              temp.room = room;
+              template.room = room;
             }
           )
         }
