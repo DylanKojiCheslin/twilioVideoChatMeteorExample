@@ -1,9 +1,9 @@
 import Video from 'twilio-video';
 
-Template.videoChat.onDestroyed(function () {
-  const temp = this;
-  if (temp.room) {
-    temp.room.disconnect();
+Template.videoChat.onDestroyed(function (event, template) {
+  event.preventDefault();
+  if (template.room) {
+    template.room.disconnect();
   }
 });
 
