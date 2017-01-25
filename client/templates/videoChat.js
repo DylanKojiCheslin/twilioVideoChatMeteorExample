@@ -15,7 +15,7 @@ Template.videoChat.helpers({
   twilioVideoNotSupportedByBrowser: function(){
     return (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia)
   },
-  isMuted: function(){
+  theClientIsMuted: function(){
     return (Template.instance().mutedVariable.get())
   }
 });

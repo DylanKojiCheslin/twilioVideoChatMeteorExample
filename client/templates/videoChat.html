@@ -5,10 +5,10 @@
   {{/if}}
   <button id="js-end-video-chat">end call</button>
   <br>
-  {{#unless isMuted}}
+  {{#unless theClientIsMuted}}
     <button id="js-mute-video-chat">mute</button>
   {{/unless}}
-  {{#if isMuted}}
+  {{#if theClientIsMuted}}
     <button id="js-unmute-video-chat">unmute</button>
   {{/if}}
   <br>
