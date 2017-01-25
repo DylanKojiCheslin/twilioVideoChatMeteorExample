@@ -23,7 +23,7 @@ copy example-settings.json to settings.json
 
 create a token for video chat using your twilio account
 
-if your confused about the token or settings file, refer to the config values in
+if your confused about the token or settings file, refer to the config values in  
 https://github.com/TwilioDevEd/video-quickstart-node
 
 put your twilio account data into settings.json
@@ -39,5 +39,7 @@ go to localhost:3000
 enter a room number and hit enter  
 allow video camera access in you browser if necessary  
 make a new incognito window localhost:3000 on it  
-type the same room number and hit enter
-video chat with your other browser instance then click the "end call" button when your done  
+type the same room number and hit enter  
+video chat with your other browser instance  
+mute/unmute  
+then click the "end call" button  
