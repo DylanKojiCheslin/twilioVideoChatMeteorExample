@@ -55,6 +55,8 @@ Template.videoChat.events({
               });
 
               template.room = room;
+              console.log(template.room);
+              console.log(template.client);
             }
           )
         }
@@ -64,6 +66,11 @@ Template.videoChat.events({
     event.preventDefault();
     if (Template.room) {
       Template.room.disconnect();
+    }
+  },
+  "click #js-mute-video-chat" : function (event, template) {
+    if (template.room) {
+      template.room.localParticipant.media.mute();
     }
   }
 });
