@@ -8,7 +8,7 @@ Template.videoChat.onDestroyed(function (event, template) {
 });
 
 Template.videoChat.onCreated(function (){
-   this.mutedVarible = new ReactiveVar(false);
+   this.mutedVariable = new ReactiveVar(false);
 });
 
 Template.videoChat.helpers({
@@ -16,7 +16,7 @@ Template.videoChat.helpers({
     return (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia)
   },
   isMuted: function(){
-    return (Template.instance().mutedVarible.get())
+    return (Template.instance().mutedVariable.get())
   }
 });
 
@@ -75,7 +75,7 @@ Template.videoChat.events({
     if (template.room) {
       template.room.localParticipant.media.mute();
       if (template.room.localParticipant.media.isMuted) {
-      template.mutedVarible.set(true);
+      template.mutedVariable.set(true);
       }
     }
   },
@@ -83,7 +83,7 @@ Template.videoChat.events({
     if (template.room) {
       template.room.localParticipant.media.unmute();
       if ( ! template.room.localParticipant.media.isMuted) {
-      template.mutedVarible.set(false);
+      template.mutedVariable.set(false);
       }
     }
   }
