@@ -8,6 +8,9 @@
   {{#unless isMuted}}
     <button id="js-mute-video-chat">mute</button>
   {{/unless}}
+  {{#if isMuted}}
+    <button id="js-unmute-video-chat">unmute</button>
+  {{/if}}
   <br>
   <div id="local-media"></div>
   <div id="remote-media"></div>

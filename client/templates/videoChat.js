@@ -76,7 +76,15 @@ Template.videoChat.events({
     if (template.room) {
       template.room.localParticipant.media.mute();
       if (template.room.localParticipant.media.isMuted) {
-      template.mutedVarible.set(true)
+      template.mutedVarible.set(true);
+      }
+    }
+  },
+  "click #js-unmute-video-chat" : function (event, template){
+    if (template.room) {
+      template.room.localParticipant.media.unmute();
+      if ( ! template.room.localParticipant.media.isMuted) {
+      template.mutedVarible.set(false);
       }
     }
   }
