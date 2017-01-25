@@ -66,10 +66,10 @@ Template.videoChat.events({
         }
     })
   },
-  "click #js-end-video-chat" : function (event, Template){
+  "click #js-end-video-chat" : function (event, template){
     event.preventDefault();
-    if (Template.room) {
-      Template.room.disconnect();
+    if (template.room) {
+      template.room.disconnect();
     }
   },
   "click #js-mute-video-chat" : function (event, template) {
