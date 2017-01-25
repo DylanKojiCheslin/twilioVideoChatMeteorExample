@@ -28,7 +28,6 @@ Template.videoChat.events({
     const userIdendifer = Random.id();
     let initAccessToken;
     let accessToken;
-    let room;
 
     initAccessToken = Meteor.call(
       "requestVideoChatAccess", roomName, userIdendifer,
