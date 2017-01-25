@@ -7,9 +7,16 @@ Template.videoChat.onDestroyed(function (event, template) {
   }
 });
 
+Template.videoChat.onCreated(function (){
+   this.mutedVarible = new ReactiveVar(false);
+});
+
 Template.videoChat.helpers({
   twilioVideoNotSupportedByBrowser: function(){
     return (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia)
+  },
+  isMuted: function(){
+    return (Template.instance().mutedVarible.get())
   }
 });
 
@@ -53,10 +60,7 @@ Template.videoChat.events({
                   participant.media.detach();
                 });
               });
-
               template.room = room;
-              console.log(template.room);
-              console.log(template.client);
             }
           )
         }
@@ -71,6 +75,9 @@ Template.videoChat.events({
   "click #js-mute-video-chat" : function (event, template) {
     if (template.room) {
       template.room.localParticipant.media.mute();
+      if (template.room.localParticipant.media.isMuted) {
+      template.mutedVarible.set(true)
+      }
     }
   }
 });

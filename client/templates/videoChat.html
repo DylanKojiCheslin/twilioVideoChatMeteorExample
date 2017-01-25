@@ -5,7 +5,9 @@
   {{/if}}
   <button id="js-end-video-chat">end call</button>
   <br>
-  <button id="js-mute-video-chat">mute</button>
+  {{#unless isMuted}}
+    <button id="js-mute-video-chat">mute</button>
+  {{/unless}}
   <br>
   <div id="local-media"></div>
   <div id="remote-media"></div>
