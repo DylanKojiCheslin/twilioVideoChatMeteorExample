@@ -1,18 +1,20 @@
 import { AccessToken } from 'twilio';
 const ConversationsGrant = AccessToken.ConversationsGrant;
 Meteor.methods({
-    'requestVideoChatAccess' : function(roomName, clientIdentity){
+    'requestVideoChatAccess' : function(roomName){
         check(roomName, String);
         check(clientIdentity, String);
         let token, response;
         let grant = new ConversationsGrant();
+        const randomIdentifier = Random.id();
+
         token = new AccessToken(
         Meteor.settings.private.twilio.accountSid,
         Meteor.settings.private.twilio.apiKey,
         Meteor.settings.private.twilio.apiKeySecret
         );
         //assign identity to token
-        token.identity = clientIdentity;
+        token.identity = randomIdentifier;
 
         //grant access to Video
         grant.configurationProfileSid = Meteor.settings.private.twilio.configurationProfileSid;

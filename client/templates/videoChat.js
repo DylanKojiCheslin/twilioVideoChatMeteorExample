@@ -34,12 +34,11 @@ Template.videoChat.events({
     event.preventDefault();
     const target = event.target;
     const roomName = target.text.value;
-    const userIdentifier = Random.id();
     let initAccessToken;
     let accessToken;
 
     initAccessToken = Meteor.call(
-      "requestVideoChatAccess", roomName, userIdentifier,
+      "requestVideoChatAccess", roomName,
       function requestVideoChatAccessCallback(error, result) {
         if (error) {
           console.log(error, error.reson);
