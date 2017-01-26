@@ -8,7 +8,13 @@ Template.videoChat.onDestroyed(function (event, template) {
 });
 
 Template.videoChat.onCreated(function (){
-   this.mutedVariable = new ReactiveVar(false);
+   this.mutedVariable = new ReactiveVar(null);
+   this.cameraDisabledVariable = new ReactiveVar(null);
+});
+
+Template.videoChat.onRendered(function (){
+   this.mutedVariable.set(false);
+   this.cameraDisabledVariable.set(false);
 });
 
 Template.videoChat.helpers({
@@ -17,6 +23,9 @@ Template.videoChat.helpers({
   },
   theClientIsMuted: function(){
     return (Template.instance().mutedVariable.get())
+  },
+  theCameraIsDisabled: function(){
+    return (Template.instance().cameraDisabledVariable.get())
   }
 });
 
@@ -84,6 +93,24 @@ Template.videoChat.events({
       template.room.localParticipant.media.unmute();
       if ( ! template.room.localParticipant.media.isMuted) {
       template.mutedVariable.set(false);
+      }
+    }
+  },
+  "click #js-disable-camera-video-chat": function (event, template) {
+    event.preventDefault();
+    if (template.room) {
+      template.room.localParticipant.media.pause()
+      if (template.room.localParticipant.media.isPaused) {
+        template.cameraDisabledVariable.set(true);
+      }
+    }
+  },
+  "click #js-enable-camera-video-chat": function (event, template) {
+    event.preventDefault();
+    if (template.room) {
+      template.room.localParticipant.media.unpause()
+      if ( ! template.room.localParticipant.media.isPaused) {
+        template.cameraDisabledVariable.set(false);
       }
     }
   }
