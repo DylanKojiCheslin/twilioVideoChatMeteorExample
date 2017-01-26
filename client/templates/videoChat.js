@@ -81,6 +81,7 @@ Template.videoChat.events({
     }
   },
   "click #js-mute-video-chat" : function (event, template) {
+    event.preventDefault();
     if (template.room) {
       template.room.localParticipant.media.mute();
       if (template.room.localParticipant.media.isMuted) {
@@ -89,6 +90,7 @@ Template.videoChat.events({
     }
   },
   "click #js-unmute-video-chat" : function (event, template){
+    event.preventDefault();
     if (template.room) {
       template.room.localParticipant.media.unmute();
       if ( ! template.room.localParticipant.media.isMuted) {
