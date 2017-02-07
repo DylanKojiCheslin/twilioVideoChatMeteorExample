@@ -93,6 +93,10 @@ Template.videoChat.events({
                 participant.media.attach('#remote-media');
               });
 
+              room.on('participantDisconnected', function(participant) {
+                participant.media.detach();
+              });
+
               room.on('disconnected', function () {
                 room.localParticipant.media.detach();
                 room.participants.forEach(function(participant) {
