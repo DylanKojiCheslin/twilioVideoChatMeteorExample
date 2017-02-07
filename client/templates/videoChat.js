@@ -10,11 +10,17 @@ Template.videoChat.onDestroyed(function (event, template) {
 Template.videoChat.onCreated(function (){
    this.mutedVariable = new ReactiveVar(null);
    this.cameraDisabledVariable = new ReactiveVar(null);
+   this.previewVariable = new ReactiveVar(null);
+   this.callStartedVariable = new ReactiveVar(null);
+   this.mediaAttachedVarirable =  new ReactiveVar(null);
 });
 
 Template.videoChat.onRendered(function (){
    this.mutedVariable.set(false);
    this.cameraDisabledVariable.set(false);
+   this.previewVariable.set(false);
+   this.callStartedVariable.set(false);
+   this.mediaAttachedVarirable.set(false);
 });
 
 Template.videoChat.helpers({
@@ -26,6 +32,15 @@ Template.videoChat.helpers({
   },
   theCameraIsDisabled: function(){
     return (Template.instance().cameraDisabledVariable.get())
+  },
+  inPreviewMode: function () {
+    return (Template.instance().previewVariable.get())
+  },
+  theCallStarted: function(){
+    return (Template.instance().callStartedVariable.get())
+  },
+  theMediaIsAttached: function(){
+    return (Template.instance().mediaAttachedVarirable.get())
   }
 });
 
@@ -40,18 +55,35 @@ Template.videoChat.events({
     initAccessToken = Meteor.call(
       "requestVideoChatAccess", roomName,
       function requestVideoChatAccessCallback(error, result) {
+        let localMediaPreview = null;
         if (error) {
           console.log(error, error.reson);
         }
         if (result) {
           accessToken = result;
           template.client = new Video.Client(accessToken.token);
+          if (template.localMedia) {
+            localMediaPreview = template.localMedia;
+          }else {
+            template.localMedia = new Video.LocalMedia();
+            Video.getUserMedia().then(
+              function (mediaStream) {
+                template.localMedia.addStream(mediaStream);
+                template.mediaAttachedVarirable.set(true);
+              },
+            function (error){
+              console.log('LocalMedia error', error);
+            })
+          }
           room = template.client.connect({
-            to: roomName
+            to: roomName,
+            localMedia: localMediaPreview,
+            audio: ( ! template.mutedVariable.get()),
+            video: ( ! template.cameraDisabledVariable.get())
           })
           .then(
             room => {
-              room.localParticipant.media.attach('#local-media');
+              template.localMedia.attach('#local-media');
 
               room.participants.forEach(function(participant) {
                 participant.media.attach('#remote-media');
@@ -68,6 +100,7 @@ Template.videoChat.events({
                 });
               });
               template.room = room;
+              template.callStartedVariable.set(true);
             }
           )
         }
@@ -77,42 +110,61 @@ Template.videoChat.events({
     event.preventDefault();
     if (template.room) {
       template.room.disconnect();
+      template.callStartedVariable.set(false);
     }
   },
   "click #js-mute-video-chat" : function (event, template) {
     event.preventDefault();
-    if (template.room) {
-      template.room.localParticipant.media.mute();
-      if (template.room.localParticipant.media.isMuted) {
+    template.localMedia.mute();
+    if (template.localMedia) {
+      template.localMedia.mute();
+      if (template.localMedia.isMuted) {
       template.mutedVariable.set(true);
       }
     }
   },
   "click #js-unmute-video-chat" : function (event, template){
     event.preventDefault();
-    if (template.room) {
-      template.room.localParticipant.media.unmute();
-      if ( ! template.room.localParticipant.media.isMuted) {
+    template.localMedia.unmute();
+    if (template.localMedia) {
+      template.localMedia.unmute();
+      if ( ! template.localMedia.isMuted) {
       template.mutedVariable.set(false);
       }
     }
   },
   "click #js-disable-camera-video-chat": function (event, template) {
     event.preventDefault();
-    if (template.room) {
-      template.room.localParticipant.media.pause()
-      if (template.room.localParticipant.media.isPaused) {
+    if (template.localMedia) {
+      template.localMedia.pause()
+      if (template.localMedia.isPaused) {
         template.cameraDisabledVariable.set(true);
       }
     }
   },
   "click #js-enable-camera-video-chat": function (event, template) {
     event.preventDefault();
-    if (template.room) {
-      template.room.localParticipant.media.unpause()
-      if ( ! template.room.localParticipant.media.isPaused) {
+    if (template.localMedia) {
+      template.localMedia.unpause()
+      if ( ! template.localMedia.isPaused) {
         template.cameraDisabledVariable.set(false);
       }
+    }
+  },
+  "click #js-preview-camera": function (event, template) {
+    event.preventDefault();
+    if( (! template.client) && ( ! template.localMedia)){
+      template.localMedia = new Video.LocalMedia();
+      Video.getUserMedia().then(
+        function (mediaStream) {
+          template.localMedia.addStream(mediaStream);
+          template.localMedia.attach('#local-media');
+          template.previewVariable.set(true);
+          template.mediaAttachedVarirable.set(true);
+        },
+      function (error){
+        console.log('LocalMedia error', error);
+      })
     }
   }
 });

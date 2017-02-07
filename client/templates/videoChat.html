@@ -3,24 +3,31 @@
   your browser doesn't support Web RTC or ORTC.
   get a recent version of Chrome, Firefox, or Microsoft Edge
   {{/if}}
-  <button id="js-end-video-chat">end call</button>
-  <br>
-  {{#unless theClientIsMuted}}
-    <button id="js-mute-video-chat">mute</button>
-  {{/unless}}
-  {{#if theClientIsMuted}}
-    <button id="js-unmute-video-chat">unmute</button>
+  {{#if theMediaIsAttached}}
+    {{#unless theClientIsMuted}}
+      <button id="js-mute-video-chat">mute</button>
+    {{/unless}}
+    {{#if theClientIsMuted}}
+      <button id="js-unmute-video-chat">unmute</button>
+    {{/if}}
+    {{#unless theCameraIsDisabled}}
+      <button id="js-disable-camera-video-chat">disable camera</button>
+    {{/unless}}
+    {{#if theCameraIsDisabled}}
+      <button id="js-enable-camera-video-chat">enable camera</button>
+    {{/if}}
   {{/if}}
-  {{#unless theCameraIsDisabled}}
-    <button id="js-disable-camera-video-chat">disable camera</button>
+  {{#unless inPreviewMode}}
+    <button id="js-preview-camera">preview</button>
   {{/unless}}
-  {{#if theCameraIsDisabled}}
-    <button id="js-enable-camera-video-chat">enable camera</button>
+  {{#if theCallStarted}}
+    <button id="js-end-video-chat">end call</button>
   {{/if}}
-  <br>
+  {{#unless theCallStarted}}
+    <form id="js-request-video-chat">
+      <input type="text" name="text" placeholder="Enter a room name" />
+    </form>
+  {{/unless}}
   <div id="local-media"></div>
   <div id="remote-media"></div>
-  <form id="js-request-video-chat">
-    <input type="text" name="text" placeholder="Enter a room name" />
-  </form>
 </template>
