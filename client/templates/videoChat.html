@@ -18,7 +18,9 @@
     {{/if}}
   {{/if}}
   {{#unless inPreviewMode}}
-    <button id="js-preview-camera">preview</button>
+    {{#unless theCallStarted}}
+      <button id="js-preview-camera">preview</button>
+    {{/unless}}
   {{/unless}}
   {{#if theCallStarted}}
     <button id="js-end-video-chat">end call</button>
