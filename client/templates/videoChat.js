@@ -141,16 +141,22 @@ Template.videoChat.events({
     event.preventDefault();
     if (template.localMedia) {
       const localVideoTrack = template.localMedia.removeCamera();
-      console.log(localVideoTrack);
       template.cameraDisabledVariable.set(true);
     }
   },
   "click #js-enable-camera-video-chat": function (event, template) {
     event.preventDefault();
     if (template.localMedia) {
-      const localVideoTrack = template.localMedia.addCamera();
-      console.log(localVideoTrack);
-      template.cameraDisabledVariable.set(false);
+      template.localMedia.addCamera().then(
+        function(localVideoTrack){
+          if (localVideoTrack.mediaStream.active) {
+            template.cameraDisabledVariable.set(false);
+          }
+        },
+        function (error){
+          console.log('LocalMedia error', error);
+        }
+      )
     }
   },
   "click #js-preview-camera": function (event, template) {
