@@ -121,20 +121,24 @@ Template.videoChat.events({
     event.preventDefault();
     template.localMedia.mute();
     if (template.localMedia) {
-      template.localMedia.mute();
-      if (template.localMedia.isMuted) {
+      template.localMedia.removeMicrophone()
+      console.log(template.localMedia);
+      // template.localMedia.mute();
+      // if (template.localMedia.isMuted) {
       template.mutedVariable.set(true);
-      }
+      // }
     }
   },
   "click #js-unmute-video-chat" : function (event, template){
     event.preventDefault();
     template.localMedia.unmute();
     if (template.localMedia) {
-      template.localMedia.unmute();
-      if ( ! template.localMedia.isMuted) {
+      template.localMedia.addMicrophone()
+      console.log(template.localMedia);
+      // template.localMedia.unmute();
+      // if ( ! template.localMedia.isMuted) {
       template.mutedVariable.set(false);
-      }
+      // }
     }
   },
   "click #js-disable-camera-video-chat": function (event, template) {
