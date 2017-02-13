@@ -114,7 +114,10 @@ Template.videoChat.events({
     event.preventDefault();
     if (template.room) {
       template.room.disconnect();
+      template.localMedia.detach('#local-media');
       template.callStartedVariable.set(false);
+      template.mediaAttachedVarirable.set(false);
+      template.previewVariable.set(false);
     }
   },
   "click #js-mute-video-chat" : function (event, template) {
