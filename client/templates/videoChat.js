@@ -168,7 +168,7 @@ Template.videoChat.events({
   },
   "click #js-preview-camera": function (event, template) {
     event.preventDefault();
-    if( (! template.client) && ( ! template.localMedia)){
+    if( ! template.localMedia){
       template.localMedia = new Video.LocalMedia();
       Video.getUserMedia().then(
         function (mediaStream) {
