@@ -1,5 +1,5 @@
 # not maintained, twilio video api updated beyond reasonable backward compatibility
-# updated example with 1.0 twilio api located at [here](https://github.com/DylanKojiCheslin/meteorTwilioVideoChat)
+# updated example with 1.0 twilio api located  [here](https://github.com/DylanKojiCheslin/meteorTwilioVideoChat)
 
 # twilioVideoChatMeteorExample
 twilio video chat in meteor  
